@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIzh — Oferta Especial</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+
+<style>
+  :root {
+    --bg: #060812;
+    --surface: #0d1120;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00f0ff;
+    --accent2: #7b5cff;
+    --text: #e8eaf0;
+    --muted: #8890aa;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 16px;
+    line-height: 1.7; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.4;
+  }
+  .blob { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+  .blob-1 { width: 500px; height: 500px; background: rgba(0,240,255,0.06); top: -100px; right: -100px; }
+  .blob-2 { width: 600px; height: 600px; background: rgba(123,92,255,0.07); bottom: 200px; left: -200px; }
+
+  header {
+    position: relative; z-index: 10;
+    display: flex; justify-content: center;
+    padding: 28px 24px; border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .urgency-bar {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    text-align: center; padding: 10px;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+    color: #000; position: relative; z-index: 10;
+  }
+  section { position: relative; z-index: 10; }
+
+  /* HERO */
+  .hero { max-width: 860px; margin: 0 auto; padding: 60px 24px 40px; text-align: center; }
+  .badge {
+    display: inline-block; border: 1px solid var(--accent); color: var(--accent);
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 24px; animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+    line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 16px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 span {
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: var(--muted); font-size: 1rem; max-width: 500px; margin: 0 auto;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  /* VIDEO */
+  .video-section {
+    max-width: 420px; margin: 0 auto; padding: 40px 24px 20px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .video-wrapper {
+    position: relative; border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(0,240,255,0.15);
+    box-shadow: 0 0 80px rgba(0,240,255,0.08); background: #000;
+  }
+  .video-aspect { position: relative; padding-bottom: 177.78%; height: 0; }
+  .video-aspect iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: none;
+  }
+
+  /* PLAY OVERLAY — some após clique */
+  .play-overlay {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: rgba(6,8,18,0.65);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .play-overlay:hover { background: rgba(6,8,18,0.45); }
+  .play-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px rgba(0,240,255,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 14px;
+  }
+  .play-overlay:hover .play-circle {
+    transform: scale(1.08);
+    box-shadow: 0 0 60px rgba(0,240,255,0.6);
+  }
+  .play-circle svg { width: 32px; height: 32px; margin-left: 4px; }
+  .play-label {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.9rem; color: #fff; letter-spacing: 0.04em;
+  }
+
+  /* SEEK BLOCKER — fica após o play overlay sumir */
+  .seek-blocker {
+    position: absolute; inset: 0; z-index: 5;
+    cursor: default; display: none;
+  }
+
+  .progress-bar-wrap { background: rgba(255,255,255,0.06); height: 5px; }
+  .progress-bar-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    transition: width 1s linear;
+  }
+  .video-status {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin-top: 14px; font-size: 0.85rem; color: var(--muted);
+  }
+  .video-status .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+    animation: pulse 1.5s infinite;
+  }
+  .video-status.done { color: #22c55e; }
+  .video-status.done .dot { background: #22c55e; animation: none; }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.4; transform:scale(0.8); }
+  }
+
+  /* CTA */
+  .cta-section {
+    max-width: 600px; margin: 0 auto; padding: 50px 24px 70px;
+    text-align: center; opacity: 1; transform: translateY(0);
+    pointer-events: all;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .cta-section.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px;
+  }
+  .cta-section h2 span {
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cta-section .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .cta-btn {
+    display: block; width: 100%; max-width: 480px; margin: 0 auto;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #000; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.05rem; padding: 20px 32px; border-radius: 10px;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 50px rgba(0,240,255,0.25);
+    cursor: pointer; border: none; text-decoration: none; text-align: center;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 70px rgba(0,240,255,0.4); }
+  .cta-guarantee { margin-top: 12px; font-size: 0.8rem; color: var(--muted); }
+  .timer-wrap { display: flex; justify-content: center; gap: 14px; margin: 24px 0; }
+  .timer-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 18px; text-align: center; min-width: 68px;
+  }
+  .timer-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.6rem; letter-spacing: -0.04em;
+    color: var(--accent); display: block; line-height: 1;
+  }
+  .timer-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 4px; display: block; }
+  .refuse-btn {
+    display: block; margin-top: 18px; font-size: 0.78rem; color: var(--muted);
+    text-decoration: underline; cursor: pointer; background: none; border: none;
+    font-family: 'DM Sans', sans-serif; text-align: center; width: 100%;
+    transition: color 0.2s;
+  }
+  .refuse-btn:hover { color: var(--text); }
+
+  footer {
+    text-align: center; padding: 36px 24px; font-size: 0.8rem; color: var(--muted);
+    border-top: 1px solid var(--border); position: relative; z-index: 10;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @media(max-width:600px) {
+    .timer-wrap { gap: 10px; }
+    .timer-block { min-width: 56px; padding: 10px 12px; }
+    .timer-num { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="urgency-bar">⚡ Oferta exclusiva — disponível apenas nessa página, não feche!</div>
+
+<header><div class="logo">VIzh</div></header>
+
+<section>
+  <div class="hero">
+    <span class="badge">Oferta especial — só para você</span>
+    <h1>Assista ao vídeo e descubra como<br><span>acelerar seus resultados</span></h1>
+    <p>Assista ao vídeo completo para liberar sua oferta exclusiva logo abaixo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="video-section">
+    <div class="video-wrapper">
+      <div class="video-aspect">
+        <iframe
+          id="yt-player"
+          src="https://www.youtube.com/embed/AxGVXeEgBC0?enablejsapi=1&rel=0&modestbranding=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&playsinline=1"
+          allow="autoplay; encrypted-media; gyroscope"
+          title="Oferta VIzh">
+        </iframe>
+
+        <!-- Botão de play — clique inicia o vídeo -->
+        <div class="play-overlay" id="play-overlay">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="6,3 20,12 6,21"/>
+            </svg>
+          </div>
+          <span class="play-label">Clique para assistir</span>
+        </div>
+
+        <!-- Bloqueia seek após o play -->
+        <div class="seek-blocker" id="seek-blocker"></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <div class="video-status" id="video-status">
+      <span class="dot"></span>
+      <span id="status-text">Clique no vídeo para iniciar e liberar a oferta…</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-section" id="cta-section">
+    <h2>Pronto! Garanta sua<br><span>oferta especial agora</span></h2>
+    <p class="sub">Por apenas R$97 · Acesso imediato · Garantia de 7 dias</p>
+    <div class="timer-wrap">
+      <div class="timer-block"><span class="timer-num" id="th">00</span><span class="timer-label">horas</span></div>
+      <div class="timer-block"><span class="timer-num" id="tm">15</span><span class="timer-label">min</span></div>
+      <div class="timer-block"><span class="timer-num" id="ts">00</span><span class="timer-label">seg</span></div>
+    </div>
+    <button class="cta-btn" onclick="window.location.href='https://pay.kirvano.com/0df01170-9b30-418c-93f1-0d1311fbb688'">✅ Sim! Quero as aulas avançadas por R$97 →</button>
+    <p class="cta-guarantee">🔒 Compra 100% segura · Garantia incondicional de 7 dias</p>
+    <button class="refuse-btn" onclick="window.location.href='https://pay.kirvano.com/0df01170-9b30-418c-93f1-0d1311fbb688'">Não, obrigado. Prefiro continuar sem as aulas avançadas.</button>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 VIzh · Todos os direitos reservados</p>
+  <p style="margin-top:8px;"><a href="#">Termos de Uso</a> · <a href="#">Política de Privacidade</a></p>
+</footer>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  var player;
+  var progressInterval = null;
+  var videoStarted = false;
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('yt-player', {
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    // Clique no overlay inicia o vídeo
+    document.getElementById('play-overlay').addEventListener('click', function() {
+      player.playVideo();
+    });
+  }
+
+  function onPlayerStateChange(event) {
+    // Vídeo iniciou — esconde overlay, mostra seek blocker
+    if (event.data === YT.PlayerState.PLAYING && !videoStarted) {
+      videoStarted = true;
+      var overlay = document.getElementById('play-overlay');
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(function() { overlay.style.display = 'none'; }, 400);
+      document.getElementById('seek-blocker').style.display = 'block';
+      document.getElementById('status-text').textContent = 'Assista ao vídeo completo para liberar a oferta…';
+      startProgressTracking();
+    }
+    // Vídeo terminou
+    if (event.data === YT.PlayerState.ENDED) {
+      videoCompleted();
+    }
+    // Impede pausa pelo usuário
+    if (event.data === YT.PlayerState.PAUSED && videoStarted) {
+      setTimeout(function() {
+        try {
+          if (player.getPlayerState() === YT.PlayerState.PAUSED) {
+            player.playVideo();
+          }
+        } catch(e) {}
+      }, 300);
+    }
+  }
+
+  function startProgressTracking() {
+    progressInterval = setInterval(function() {
+      try {
+        var current = player.getCurrentTime();
+        var duration = player.getDuration();
+        if (duration > 0) {
+          var pct = (current / duration) * 100;
+          document.getElementById('progress-fill').style.width = pct + '%';
+          var remaining = Math.ceil(duration - current);
+          var m = Math.floor(remaining / 60);
+          var s = remaining % 60;
+          if (remaining > 5) {
+            document.getElementById('status-text').textContent =
+              'Faltam ' + m + 'min ' + String(s).padStart(2,'0') + 's para liberar a oferta';
+          }
+        }
+      } catch(e) {}
+    }, 1000);
+  }
+
+  function videoCompleted() {
+    clearInterval(progressInterval);
+    document.getElementById('progress-fill').style.width = '100%';
+    document.getElementById('seek-blocker').style.display = 'none';
+    var statusEl = document.getElementById('video-status');
+    statusEl.classList.add('done');
+    document.getElementById('status-text').textContent = '✓ Vídeo assistido! Sua oferta exclusiva foi liberada abaixo.';
+    var cta = document.getElementById('cta-section');
+    cta.classList.add('visible');
+    setTimeout(function() { cta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 500);
+  }
+
+  // Garante que o botão de compra funciona mesmo se Kirvano demorar
+  document.addEventListener('DOMContentLoaded', function() {
+    var buyBtn = document.querySelector('.kirvano-payment-trigger');
+    var refuseBtn = document.querySelector('.kirvano-refuse-trigger');
+
+    if (buyBtn) {
+      buyBtn.addEventListener('click', function(e) {
+        // Tenta chamar Kirvano manualmente se a classe não funcionar
+        if (typeof window.KirvanoUpsell !== 'undefined') {
+          window.KirvanoUpsell.accept();
+        } else if (typeof window.kirvanoAccept !== 'undefined') {
+          window.kirvanoAccept();
+        }
+      });
+    }
+
+    if (refuseBtn) {
+      refuseBtn.addEventListener('click', function(e) {
+        if (typeof window.KirvanoUpsell !== 'undefined') {
+          window.KirvanoUpsell.refuse();
+        } else if (typeof window.kirvanoRefuse !== 'undefined') {
+          window.kirvanoRefuse();
+        }
+      });
+    }
+  });
+  var total = 15 * 60;
+  function tick() {
+    var h = Math.floor(total / 3600);
+    var m = Math.floor((total % 3600) / 60);
+    var s = total % 60;
+    document.getElementById('th').textContent = String(h).padStart(2,'0');
+    document.getElementById('tm').textContent = String(m).padStart(2,'0');
+    document.getElementById('ts').textContent = String(s).padStart(2,'0');
+    if (total > 0) { total--; setTimeout(tick, 1000); }
+  }
+  tick();
+</script>
+
+</body>
+</html>
